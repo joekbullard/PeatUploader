@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Peat Uploader{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css" rel="stylesheet"/> 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    </head>
+    <body class="bg-image"
+    style="
+      background-image: url('{% static "img/resized_bg.jpg" %}');
+      height: 100vh;
+    ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <nav class="navbar opacity-75 navbar-expand-lg navbar-dark bg-dark" aria-label="Fifth navbar example">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Peat Uploader</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample05">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}">About</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ user.email }}</a>
+                            </li>
+                            <li class="btn-nav">
+                                <form method="post" action="{% url 'account_logout' %}">
+                                    {% csrf_token %}
+                                    {% if redirect_field_value %}
+                                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                    {% endif %}
+                                    <button class="btn btn-outline-light" type="submit">Logout</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="btn btn-secondary" href="{% url 'account_login' %}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid mt-4">
+        {% block content %}
+        <!-- Content of child templates will go here -->
+        {% endblock %}
+    </div>
+
+    <!-- Bootstrap JS (optional, only needed for certain components) -->
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

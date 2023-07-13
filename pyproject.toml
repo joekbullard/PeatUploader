@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "ecologica"
+version = "0.1.0"
+description = ""
+authors = ["Joe Bullard <joekbullard@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.2.3"
+django-allauth = "^0.54.0"
+django-resized = "^1.0.2"
+pillow = "^10.0.0"
+django-widget-tweaks = "^1.4.12"
+djhtml = "^3.0.6"
+
+[tool.poetry.group.dev.dependencies]
+django-browser-reload = "^1.10.0"
+django-extensions = "^3.2.3"
+black = "^23.3.0"
+djhtml = "^3.0.6"
+pre-commit = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
